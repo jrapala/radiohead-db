@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { render } from 'react-dom'
-import Logo from './Logo.svg'
+import Logo from '../public/img/Logo.svg'
 import InputRow from './InputRow'
 import AlbumInfo from './AlbumInfo'
 
