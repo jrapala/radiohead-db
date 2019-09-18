@@ -28,5 +28,5 @@
     "react-dom": "^16.9.0",
     "style.css": "^1.0.0"
   },
-  "assetsPath": "/assets"
+  "assetsPath": "./assets"
 }
