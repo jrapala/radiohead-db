@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { render } from 'react-dom'
-import Logo from './Logo.svg'
+// import Logo from './images/Logo.svg'
+const Logo = require('./images/Logo.svg')
 import InputRow from './InputRow'
 import AlbumInfo from './AlbumInfo'
 
