@@ -4,8 +4,9 @@
   "description": "A GraphQL-powered React app for fetching Radiohead songs and albums",
   "main": "src/App.js",
   "scripts": {
-		"build": "parcel build public/index.html --public-url='./'",
-    "dev": "parcel public/index.html",
+    "clear-build-cache": "rm -rf .cache/ dist/ public/",
+		"build": "parcel build src/index.html --out-dir public/",
+    "dev": "parcel src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
