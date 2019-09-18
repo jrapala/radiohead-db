@@ -5,9 +5,7 @@ const InputRow = ({ label, type }) => {
 		<div className="input-row">
 			<label htmlFor={type}>{label}</label>
 			<div>
-				<select id={type}>
-					<option>hi</option>
-				</select>
+				<select id={type}></select>
 			</div>
 		</div>
 	)
