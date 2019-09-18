@@ -56,3 +56,7 @@ typings/
 
 # Mac files
 .DS_Store
+
+# Parcel files
+.cache
+dist/
