@@ -11,9 +11,6 @@ const App = () => {
 			<h2>Album Database</h2>
 			<InputRow label="Find a Song:" type="song" />
 			<InputRow label="View an Album:" type="album" />
-			<AlbumInfo />
-			<hr />
-			<AlbumInfo />
 		</Fragment>
 	)
 }
