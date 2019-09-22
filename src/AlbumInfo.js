@@ -8,12 +8,13 @@ const AlbumInfo = ({ title, tracks, releaseYear }) => {
 				<p>{releaseYear}}</p>
 			</div>
 			<div>
-				{tracks.map(track => {
-					;<p>
-						<span>{track.trackNumber}</span>
-						{track.trackTitle}
+				{songs.map((song, idx) => (
+					<p key={song.trackTitle}>
+						<span>{idx + 1}</span>
+						{song.trackTitle}
+						{song.length}
 					</p>
-				})}
+				)}
 			</div>
 		</div>
 	)
