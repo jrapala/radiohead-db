@@ -14,7 +14,7 @@
     "url": "git+https://github.com/jrapala/radiohead-db.git"
   },
   "author": "Juliette Rapala <juliette@julietterapala.com>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/jrapala/radiohead-db/issues"
   },
