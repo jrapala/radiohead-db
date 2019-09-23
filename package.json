@@ -7,14 +7,14 @@
     "clear-build-cache": "rm -rf .cache/ dist/",
     "build": "parcel build src/index.html",
     "dev": "parcel src/index.html",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "nodemon server/index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jrapala/radiohead-db.git"
   },
   "author": "Juliette Rapala <juliette@julietterapala.com>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/jrapala/radiohead-db/issues"
   },
@@ -24,6 +24,8 @@
     "sass": "^1.22.12"
   },
   "dependencies": {
+    "apollo-server": "^2.9.3",
+    "graphql": "^14.5.7",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "style.css": "^1.0.0"
