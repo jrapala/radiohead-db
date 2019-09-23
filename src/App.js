@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { render } from 'react-dom'
-import Logo from '../assets/Logo.svg'
+import Logo from './images/logo.svg'
 import InputRow from './InputRow'
 import AlbumInfo from './AlbumInfo'
 
@@ -11,9 +11,6 @@ const App = () => {
 			<h2>Album Database</h2>
 			<InputRow label="Find a Song:" type="song" />
 			<InputRow label="View an Album:" type="album" />
-			<AlbumInfo />
-			<hr />
-			<AlbumInfo />
 		</Fragment>
 	)
 }
