@@ -1,14 +1,23 @@
 const { ApolloServer, gql } = require('apollo-server')
 
+const albums = require('../data/albums.json')
+
 const typeDefs = gql`
 	type Query {
-		hello: String
+		allAlbums: [Album!]!
+	}
+
+	type Album {
+		id: ID
+		title: String
+		releaseYear: String
+		songs: [ID]
 	}
 `
 
 const resolvers = {
 	Query: {
-		hello: () => 'Radiohead is Awesome!',
+		allAlbums: () => albums,
 	},
 }
 
