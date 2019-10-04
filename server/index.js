@@ -13,6 +13,18 @@ const typeDefs = gql`
 		releaseYear: Int!
 		songs: [ID!]!
 	}
+
+	type Song {
+		id: ID!
+		songTitle: String!
+		recordings: [Recording!]!
+	}
+
+	type Recording {
+		id: ID!
+		trackTitle: String!
+		length: String!
+	}
 `
 
 const resolvers = {
