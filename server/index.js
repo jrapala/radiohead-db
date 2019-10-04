@@ -8,10 +8,10 @@ const typeDefs = gql`
 	}
 
 	type Album {
-		id: ID
-		title: String
-		releaseYear: String
-		songs: [ID]
+		id: ID!
+		title: String!
+		releaseYear: Int!
+		songs: [ID!]!
 	}
 `
 
