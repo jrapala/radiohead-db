@@ -1,10 +1,12 @@
 const { ApolloServer, gql } = require('apollo-server')
 
 const albums = require('../data/albums.json')
+const songs = require('../data/songs.json')
 
 const typeDefs = gql`
 	type Query {
 		allAlbums: [Album!]!
+		allSongs: [Song!]!
 	}
 
 	type Album {
@@ -30,6 +32,7 @@ const typeDefs = gql`
 const resolvers = {
 	Query: {
 		allAlbums: () => albums,
+		allSongs: () => songs,
 	},
 }
 
