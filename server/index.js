@@ -7,6 +7,7 @@ const typeDefs = gql`
 	type Query {
 		allAlbums: [Album!]!
 		allSongs: [Song!]!
+		findAlbumById(id: ID!): Album!
 	}
 
 	type Album {
@@ -33,6 +34,9 @@ const resolvers = {
 	Query: {
 		allAlbums: () => albums,
 		allSongs: () => songs,
+		findAlbumById: (parent, args) => {
+			return albums.find(album => args.id === album.id)
+		},
 	},
 }
 
