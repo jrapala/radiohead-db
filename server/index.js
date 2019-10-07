@@ -15,7 +15,7 @@ const typeDefs = gql`
 		id: ID!
 		title: String!
 		releaseYear: Int!
-		songs: [ID!]!
+		songs: [Song!]!
 	}
 
 	type Song {
@@ -41,6 +41,10 @@ const resolvers = {
 		findSongById: (parent, args) => {
 			return songs.find(song => args.id === song.id)
 		},
+	},
+	Album: {
+		songs: (parent, args) =>
+			parent.songs.map(id => songs.find(song => id === song.id)),
 	},
 }
 
