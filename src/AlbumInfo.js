@@ -1,23 +1,29 @@
 import React from 'react'
 
-const AlbumInfo = ({ title, tracks, releaseYear }) => {
-	return (
-		<div className="album">
-			<div>
-				<h3>{title}</h3>
-				<p>{releaseYear}}</p>
+const AlbumInfo = ({ album }) => {
+	if (album) {
+		return (
+			<div className="album">
+				<div>
+					<h3>{album.title}</h3>
+					<p>{album.releaseYear}}</p>
+				</div>
+				<div>
+					{album.songs.map((song, i) => {
+						return (
+							<p key={song.trackTitle}>
+								<span>{song.id}</span>
+								{song.trackTitle}
+								{song.length}
+							</p>
+						)
+					})}
+				</div>
 			</div>
-			<div>
-				{songs.map((song, idx) => {
-					;<p key={song.trackTitle}>
-						<span>{idx + 1}</span>
-						{song.trackTitle}
-						{song.length}
-					</p>
-				})}
-			</div>
-		</div>
-	)
+		)
+	} else {
+		return <div />
+	}
 }
 
 export default AlbumInfo
