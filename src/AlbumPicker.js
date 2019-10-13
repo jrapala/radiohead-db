@@ -5,7 +5,9 @@ const AlbumPicker = () => {
 		<div className="input-row">
 			<label htmlFor="album">View an Album:</label>
 			<div>
-				<select id="album"></select>
+				<select id="album" defaultValue="">
+					<option value=""></option>
+				</select>
 			</div>
 		</div>
 	)
