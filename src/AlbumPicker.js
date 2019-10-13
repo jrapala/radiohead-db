@@ -22,7 +22,7 @@ const AlbumPicker = () => {
 			<label htmlFor="album">View an Album:</label>
 			<div>
 				<select id="album" defaultValue="">
-					<option value="disabled"></option>
+					<option value=""></option>
 					{data.allAlbums.map(album => (
 						<option key={album.id} value={album.id}>
 							{album.title}

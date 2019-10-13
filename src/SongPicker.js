@@ -5,7 +5,9 @@ const SongPicker = () => {
 		<div className="input-row">
 			<label htmlFor="song">Find a Song:</label>
 			<div>
-				<select id="song"></select>
+				<select id="song" defaultValue="">
+					<option value=""></option>
+				</select>
 			</div>
 		</div>
 	)
