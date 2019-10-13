@@ -11,7 +11,7 @@ const GET_ALL_ALBUMS = gql`
 	}
 `
 
-const AlbumPicker = () => {
+const AlbumPicker = ({ handleAlbumSelection }) => {
 	const { loading, error, data } = useQuery(GET_ALL_ALBUMS)
 
 	if (loading) return <p>Loading...</p>
@@ -21,7 +21,11 @@ const AlbumPicker = () => {
 		<div className="input-row">
 			<label htmlFor="album">View an Album:</label>
 			<div>
-				<select id="album" defaultValue="">
+				<select
+					id="album"
+					defaultValue=""
+					onChange={handleAlbumSelection}
+				>
 					<option value=""></option>
 					{data.allAlbums.map(album => (
 						<option key={album.id} value={album.id}>

@@ -6,10 +6,14 @@ import AlbumInfo from './AlbumInfo'
 const albums = []
 
 const Main = () => {
+	const handleAlbumSelection = event => {
+		console.log(event.target.value)
+	}
+
 	return (
 		<Fragment>
 			<SongPicker />
-			<AlbumPicker />
+			<AlbumPicker handleAlbumSelection={handleAlbumSelection} />
 			{albums.forEach(album => (
 				<AlbumInfo album={album} />
 			))}
