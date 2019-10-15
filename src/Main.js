@@ -10,9 +10,10 @@ const Main = () => {
 		<Fragment>
 			<SongPicker />
 			<AlbumPicker />
-			{albums.forEach(album => (
-				<AlbumInfo album={album} />
-			))}
+			{albums &&
+				albums.map(album => (
+					<AlbumInfo key={album.title} album={album} />
+				))}
 		</Fragment>
 	)
 }
