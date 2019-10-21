@@ -28,6 +28,7 @@ const typeDefs = gql`
 		id: ID!
 		trackTitle: String!
 		length: String!
+		album: Album!
 	}
 `
 
@@ -45,6 +46,11 @@ const resolvers = {
 	Album: {
 		songs: (parent, args) =>
 			parent.songs.map(id => songs.find(song => id === song.id)),
+	},
+	Recording: {
+		album: (parent, args) => {
+			return albums.find(album => parent.id === album.id)
+		},
 	},
 }
 
