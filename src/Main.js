@@ -18,25 +18,30 @@ const GET_ALBUM = gql`
 	}
 `
 
-const albums = []
-
 const Main = () => {
-	const [album, selectAlbum] = useState()
+	const [userSelectedAlbumId, setUserSelectedAlbumId] = useState()
+	const [albumResults, setAlbumResults] = useState()
+
 	const { loading, error, data } = useQuery(GET_ALBUM, {
-		variables: { id: album },
-		skip: !album,
+		variables: { id: userSelectedAlbumId },
+		skip: !userSelectedAlbumId,
+		onCompleted: data => {
+			setAlbumResults([data.findAlbumById])
+		},
 	})
 
 	const handleAlbumSelection = event => {
-		selectAlbum(event.target.value)
+		event.target.value
+			? setUserSelectedAlbumId(event.target.value)
+			: setAlbumResults()
 	}
 
 	return (
 		<Fragment>
 			<SongPicker />
 			<AlbumPicker handleAlbumSelection={handleAlbumSelection} />
-			{albums &&
-				albums.map(album => (
+			{albumResults &&
+				albumResults.map(album => (
 					<AlbumInfo key={album.title} album={album} />
 				))}
 		</Fragment>
