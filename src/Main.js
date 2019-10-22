@@ -36,15 +36,6 @@ const GET_ALBUM_BY_SONG_ID = gql`
 	}
 `
 
-const GET_ALL_ALBUMS = gql`
-	{
-		allAlbums {
-			id
-			title
-		}
-	}
-`
-
 const Main = () => {
 	const [albumResults, setAlbumResults] = useState()
 
@@ -53,35 +44,60 @@ const Main = () => {
 	const [album, AlbumPicker, setAlbum] = useAlbumPicker()
 
 	// Handle user album selection
-	const getAlbumByAlbumQuery = useQuery(GET_ALBUM_BY_ALBUM_ID, {
-		variables: { id: album },
-		skip: !album,
-		onCompleted: data => {
-			setSong('')
-			setAlbumResults([data.findAlbumById])
-		},
-	})
+	const { loading: loadingAlbums, error: albumsError } = useQuery(
+		GET_ALBUM_BY_ALBUM_ID,
+		{
+			variables: { id: album },
+			skip: !album,
+			onCompleted: data => {
+				setSong('')
+				setAlbumResults([data.findAlbumById])
+			},
+		}
+	)
 
 	// Handle user song selection
-	const getAlbumBySongQuery = useQuery(GET_ALBUM_BY_SONG_ID, {
-		variables: { id: song },
-		skip: !song,
-		onCompleted: data => {
-			setAlbum('')
-			setAlbumResults(
-				data.findSongById.recordings.map(recording => recording.album)
+	const { loading: loadingSongs, error: songsError } = useQuery(
+		GET_ALBUM_BY_SONG_ID,
+		{
+			variables: { id: song },
+			skip: !song,
+			onCompleted: data => {
+				setAlbum('')
+				setAlbumResults(
+					data.findSongById.recordings.map(
+						recording => recording.album
+					)
+				)
+			},
+		}
+	)
+
+	const renderContent = () => {
+		if (loadingAlbums || loadingSongs) {
+			return <div>Loading..</div>
+		}
+
+		if (albumsError || songsError) {
+			return (
+				<div>
+					Error connecting to the server. Please try again later.
+				</div>
 			)
-		},
-	})
+		}
+
+		if (albumResults) {
+			return albumResults.map(album => (
+				<AlbumInfo key={album.title} album={album} song={song} />
+			))
+		}
+	}
 
 	return (
 		<Fragment>
 			<SongPicker />
 			<AlbumPicker />
-			{albumResults &&
-				albumResults.map(album => (
-					<AlbumInfo key={album.title} album={album} song={song} />
-				))}
+			{renderContent()}
 		</Fragment>
 	)
 }
