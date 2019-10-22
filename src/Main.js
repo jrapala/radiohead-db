@@ -1,8 +1,9 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
-import useDropdown from './useDropdown'
+import useSongPicker from './useSongPicker'
+import useAlbumPicker from './useAlbumPicker'
 import AlbumInfo from './AlbumInfo'
 
 const GET_ALBUM_BY_ALBUM_ID = gql`
@@ -35,15 +36,6 @@ const GET_ALBUM_BY_SONG_ID = gql`
 	}
 `
 
-const GET_ALL_SONGS = gql`
-	{
-		allSongs {
-			id
-			songTitle
-		}
-	}
-`
-
 const GET_ALL_ALBUMS = gql`
 	{
 		allAlbums {
@@ -54,39 +46,13 @@ const GET_ALL_ALBUMS = gql`
 `
 
 const Main = () => {
-	const [songOptions, setSongOptions] = useState([])
-	const [albumOptions, setAlbumOptions] = useState([])
 	const [albumResults, setAlbumResults] = useState()
 
-	// Create dropdown components
-	const [song, SongPicker, setSong] = useDropdown(
-		'Find a Song:',
-		'',
-		songOptions,
-		'songTitle'
-	)
+	// Create Pickers
+	const [song, SongPicker, setSong] = useSongPicker()
+	const [album, AlbumPicker, setAlbum] = useAlbumPicker()
 
-	const [album, AlbumPicker, setAlbum] = useDropdown(
-		'Find an Album:',
-		'',
-		albumOptions,
-		'title'
-	)
-
-	// Populate dropdown components
-	const getAllSongsQuery = useQuery(GET_ALL_SONGS, {
-		onCompleted: data => {
-			setSongOptions(data.allSongs)
-		},
-	})
-
-	const getAllAlbumsQuery = useQuery(GET_ALL_ALBUMS, {
-		onCompleted: data => {
-			setAlbumOptions(data.allAlbums)
-		},
-	})
-
-	// Handle user selection
+	// Handle user album selection
 	const getAlbumByAlbumQuery = useQuery(GET_ALBUM_BY_ALBUM_ID, {
 		variables: { id: album },
 		skip: !album,
@@ -96,6 +62,7 @@ const Main = () => {
 		},
 	})
 
+	// Handle user song selection
 	const getAlbumBySongQuery = useQuery(GET_ALBUM_BY_SONG_ID, {
 		variables: { id: song },
 		skip: !song,
