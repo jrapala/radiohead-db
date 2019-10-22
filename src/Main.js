@@ -74,31 +74,33 @@ const Main = () => {
 	)
 
 	// Populate dropdown components
-	const { data: allSongs } = useQuery(GET_ALL_SONGS, {
+	const getAllSongsQuery = useQuery(GET_ALL_SONGS, {
 		onCompleted: data => {
 			setSongOptions(data.allSongs)
 		},
 	})
 
-	const { data: allAlbums } = useQuery(GET_ALL_ALBUMS, {
+	const getAllAlbumsQuery = useQuery(GET_ALL_ALBUMS, {
 		onCompleted: data => {
 			setAlbumOptions(data.allAlbums)
 		},
 	})
 
 	// Handle user selection
-	const { data: albumSelectionData } = useQuery(GET_ALBUM_BY_ALBUM_ID, {
+	const getAlbumByAlbumQuery = useQuery(GET_ALBUM_BY_ALBUM_ID, {
 		variables: { id: album },
 		skip: !album,
 		onCompleted: data => {
+			setSong('')
 			setAlbumResults([data.findAlbumById])
 		},
 	})
 
-	const { data: songSelectionData } = useQuery(GET_ALBUM_BY_SONG_ID, {
+	const getAlbumBySongQuery = useQuery(GET_ALBUM_BY_SONG_ID, {
 		variables: { id: song },
 		skip: !song,
 		onCompleted: data => {
+			setAlbum('')
 			setAlbumResults(
 				data.findSongById.recordings.map(recording => recording.album)
 			)
