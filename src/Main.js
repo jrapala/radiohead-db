@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect, useRef } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
@@ -38,6 +38,16 @@ const GET_ALBUM_BY_SONG_ID = gql`
 
 const Main = () => {
 	const [albumResults, setAlbumResults] = useState()
+	const resultsRef = useRef()
+
+	useEffect(() => {
+		if (resultsRef.current) {
+			window.scrollTo({
+				behavior: 'smooth',
+				top: resultsRef.current.offsetTop,
+			})
+		}
+	}, [albumResults])
 
 	// Create Pickers
 	const [song, SongPicker, setSong] = useSongPicker()
@@ -87,9 +97,13 @@ const Main = () => {
 		}
 
 		if (albumResults) {
-			return albumResults.map(album => (
-				<AlbumInfo key={album.title} album={album} song={song} />
-			))
+			if (!album && !song) {
+				return
+			} else {
+				return albumResults.map(album => (
+					<AlbumInfo key={album.title} album={album} song={song} />
+				))
+			}
 		}
 	}
 
@@ -97,7 +111,7 @@ const Main = () => {
 		<Fragment>
 			<SongPicker />
 			<AlbumPicker />
-			{renderContent()}
+			<div ref={resultsRef}>{renderContent()}</div>
 		</Fragment>
 	)
 }
