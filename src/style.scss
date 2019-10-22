@@ -158,6 +158,11 @@ select {
 	}
 }
 
+.selected {
+	color: $color-lowlight;
+	font-weight: 800;
+}
+
 @media screen and (max-width: 800px) {
 	.input-row {
 		display: flex;

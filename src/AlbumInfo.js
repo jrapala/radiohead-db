@@ -1,16 +1,19 @@
 import React from 'react'
 
-const AlbumInfo = ({ album }) => (
+const AlbumInfo = props => (
 	<div className="album">
 		<div>
-			<h3>{album.title}</h3>
-			<p>{album.releaseYear}</p>
+			<h3>{props.album.title}</h3>
+			<p>{props.album.releaseYear}</p>
 		</div>
 		<div>
-			{album.songs.map((song, i) => {
+			{props.album.songs.map((song, i) => {
 				return (
-					<p key={song.songTitle}>
-						<span>{i + 1}</span>
+					<p
+						key={song.id}
+						className={props.song === song.id ? 'selected' : ''}
+					>
+						<span>{i + 1}.</span>
 						{song.songTitle}
 					</p>
 				)

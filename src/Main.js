@@ -1,48 +1,117 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
-import SongPicker from './SongPicker'
-import AlbumPicker from './AlbumPicker'
+import useDropdown from './useDropdown'
 import AlbumInfo from './AlbumInfo'
 
-const GET_ALBUM = gql`
+const GET_ALBUM_BY_ALBUM_ID = gql`
 	query($id: ID!) {
 		findAlbumById(id: $id) {
 			title
 			releaseYear
 			songs {
+				id
 				songTitle
 			}
 		}
 	}
 `
 
+const GET_ALBUM_BY_SONG_ID = gql`
+	query($id: ID!) {
+		findSongById(id: $id) {
+			recordings {
+				album {
+					title
+					releaseYear
+					songs {
+						id
+						songTitle
+					}
+				}
+			}
+		}
+	}
+`
+
+const GET_ALL_SONGS = gql`
+	{
+		allSongs {
+			id
+			songTitle
+		}
+	}
+`
+
+const GET_ALL_ALBUMS = gql`
+	{
+		allAlbums {
+			id
+			title
+		}
+	}
+`
+
 const Main = () => {
-	const [userSelectedAlbumId, setUserSelectedAlbumId] = useState()
+	const [songOptions, setSongOptions] = useState([])
+	const [albumOptions, setAlbumOptions] = useState([])
 	const [albumResults, setAlbumResults] = useState()
 
-	const { loading, error, data } = useQuery(GET_ALBUM, {
-		variables: { id: userSelectedAlbumId },
-		skip: !userSelectedAlbumId,
+	// Create dropdown components
+	const [song, SongPicker, setSong] = useDropdown(
+		'Find a Song:',
+		'',
+		songOptions,
+		'songTitle'
+	)
+
+	const [album, AlbumPicker, setAlbum] = useDropdown(
+		'Find an Album:',
+		'',
+		albumOptions,
+		'title'
+	)
+
+	// Populate dropdown components
+	const { data: allSongs } = useQuery(GET_ALL_SONGS, {
+		onCompleted: data => {
+			setSongOptions(data.allSongs)
+		},
+	})
+
+	const { data: allAlbums } = useQuery(GET_ALL_ALBUMS, {
+		onCompleted: data => {
+			setAlbumOptions(data.allAlbums)
+		},
+	})
+
+	// Handle user selection
+	const { data: albumSelectionData } = useQuery(GET_ALBUM_BY_ALBUM_ID, {
+		variables: { id: album },
+		skip: !album,
 		onCompleted: data => {
 			setAlbumResults([data.findAlbumById])
 		},
 	})
 
-	const handleAlbumSelection = event => {
-		event.target.value
-			? setUserSelectedAlbumId(event.target.value)
-			: setAlbumResults()
-	}
+	const { data: songSelectionData } = useQuery(GET_ALBUM_BY_SONG_ID, {
+		variables: { id: song },
+		skip: !song,
+		onCompleted: data => {
+			setAlbumResults(
+				data.findSongById.recordings.map(recording => recording.album)
+			)
+		},
+	})
 
 	return (
 		<Fragment>
 			<SongPicker />
-			<AlbumPicker handleAlbumSelection={handleAlbumSelection} />
+			<AlbumPicker />
 			{albumResults &&
 				albumResults.map(album => (
-					<AlbumInfo key={album.title} album={album} />
+					<AlbumInfo key={album.title} album={album} song={song} />
 				))}
 		</Fragment>
 	)
