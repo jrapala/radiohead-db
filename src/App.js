@@ -7,7 +7,12 @@ import Logo from './images/logo.svg'
 import Main from './Main'
 
 const client = new ApolloClient({
-	uri: 'http://localhost:4000/',
+	// uri: 'http://localhost:4000/',
+	uri: 'https://m9xrgmtc3a.execute-api.us-east-1.amazonaws.com/dev/graphql',
+	fetchOptions: {
+		mode: 'no-cors',
+	},
+	// uri: 'http://localhost:1234/dev/graphql',
 })
 
 const App = () => {
